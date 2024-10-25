@@ -34,13 +34,11 @@ export const ArticleParamsForm = (props: TArticleParamsFormProps) => {
 
 	const [openForm, setOpenForm] = useState(false);
 
-	const changeHandler = (name: string) => {
-		return (value: OptionType) => {
+	const changeHandler = (name: string) => (value: OptionType) => {
 			setFormState({
 				...formState,
 				[name]: value,
 			});
-		};
 	};
 
 	const submitHandler = (e: SyntheticEvent) => {
