@@ -19,7 +19,7 @@ const App = () => {
 	const [pageState, setPageState] = useState(defaultArticleState);
 
 	return (
-		<div
+		<main
 			className={clsx(styles.main)}
 			style={
 				{
@@ -32,7 +32,7 @@ const App = () => {
 			}>
 			<ArticleParamsForm pageState={pageState} setPageState={setPageState} />
 			<Article />
-		</div>
+		</main>
 	);
 };
 

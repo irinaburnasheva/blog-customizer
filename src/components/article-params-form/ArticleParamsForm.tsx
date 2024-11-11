@@ -18,7 +18,7 @@ import {
 	ArticleStateType,
 } from '../../constants/articleProps';
 
-import {  SyntheticEvent, useState } from 'react';
+import { MouseEvent, SyntheticEvent, useEffect, useState, useRef } from 'react';
 import { forceReRender } from '@storybook/react';
 import clsx from 'clsx';
 
@@ -35,10 +35,10 @@ export const ArticleParamsForm = (props: TArticleParamsFormProps) => {
 	const [openForm, setOpenForm] = useState(false);
 
 	const changeHandler = (name: string) => (value: OptionType) => {
-			setFormState({
-				...formState,
-				[name]: value,
-			});
+		setFormState({
+			...formState,
+			[name]: value,
+		});
 	};
 
 	const submitHandler = (e: SyntheticEvent) => {
@@ -49,14 +49,30 @@ export const ArticleParamsForm = (props: TArticleParamsFormProps) => {
 		setOpenForm(false);
 	};
 
-	function resetToDefaultHandler(e: SyntheticEvent) {
+	const resetToDefaultHandler = (e: SyntheticEvent) => {
 		e.preventDefault();
 
 		setFormState(defaultArticleState);
 		setPageState(defaultArticleState);
 
 		setOpenForm(false);
-	}
+	};
+
+	const formRef = useRef<HTMLFormElement | null>(null);
+
+	const outFormClickHandler = (e: Event) => {
+		if (formRef.current && !formRef.current.contains(e.target as Node)) {
+			setOpenForm(false);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('mousedown', outFormClickHandler);
+
+		return () => {
+			document.removeEventListener('mousedown', outFormClickHandler);
+		};
+	}, []);
 
 	return (
 		<>
@@ -73,7 +89,8 @@ export const ArticleParamsForm = (props: TArticleParamsFormProps) => {
 				<form
 					className={clsx([styles.form, styles.articleForm])}
 					onSubmit={submitHandler}
-					onReset={resetToDefaultHandler}>
+					onReset={resetToDefaultHandler}
+					ref={formRef}>
 					<Text weight={800} size={31} uppercase>
 						Задайте параметры
 					</Text>
