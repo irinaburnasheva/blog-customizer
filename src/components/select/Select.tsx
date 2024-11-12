@@ -18,10 +18,11 @@ type SelectProps = {
 	onChange?: (selected: OptionType) => void;
 	onClose?: () => void;
 	title?: string;
+	name?: string;
 };
 
 export const Select = (props: SelectProps) => {
-	const { options, placeholder, selected, onChange, onClose, title } = props;
+	const { options, placeholder, selected, onChange, onClose, title, name } = props;
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const rootRef = useRef<HTMLDivElement>(null);
 	const placeholderRef = useRef<HTMLDivElement>(null);
