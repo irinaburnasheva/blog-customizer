@@ -67,12 +67,14 @@ export const ArticleParamsForm = (props: TArticleParamsFormProps) => {
 	};
 
 	useEffect(() => {
+		if (!openForm) return;
+
 		document.addEventListener('mousedown', outFormClickHandler);
 
 		return () => {
 			document.removeEventListener('mousedown', outFormClickHandler);
 		};
-	}, []);
+	}, [openForm]);
 
 	return (
 		<>
